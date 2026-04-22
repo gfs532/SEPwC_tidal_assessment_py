@@ -12,7 +12,7 @@ import argparse
 from pathlib import Path
 
 def read_tidal_data(filename):
-
+    
     #create path object
     path = Path(filename)
     
