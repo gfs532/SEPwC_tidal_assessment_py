@@ -72,7 +72,11 @@ def extract_single_year_remove_mean(year, data):
 
     sea_level_mean = single_year_data['Sea Level'].mean()
 
-	return
+	#Subtracting the mean sea level from the sea level column for the single year.
+    single_year_data['Sea Level'] = single_year_data['Sea Level'] - sea_level_mean
+
+
+    return single_year_data
 
 
 def extract_section_remove_mean(start, end, data):
