@@ -34,6 +34,10 @@ def read_tidal_data(filename):
 	#Combine date and time columns into one column.
     df['date_and_time'] = pd.to_datetime(df['Date'] + ' ' + df['Time'])
 
+	#Set the index to the datetime column
+    df = df.set_index('date_and_time')
+
+
     return
 
 
