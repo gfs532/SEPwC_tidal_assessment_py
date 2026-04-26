@@ -67,6 +67,8 @@ def read_tidal_data(filename):
 
 def extract_single_year_remove_mean(year, data):
 
+	#Extract the data for a single year.
+    single_year_data = data.loc[str(year)]
     return
 
 
