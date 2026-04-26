@@ -12,19 +12,32 @@ import argparse
 from pathlib import Path
 
 def read_tidal_data(filename):
-    
-    #create path object
+
+    #Create a path object.
     path = Path(filename)
-    
-    #check file exists
+
+    #Check the file exists.
     if not path.is_file():
         raise FileNotFoundError(f"Could not find the file: {filename}")
 
-    return 
-    
+	#Put the data in a DataFrame.
+	#Make sure whitespaces are not treated as columns.
+	#Skip the first 11 rows.
+	#Name the columns.
+    df = pd.read_csv(
+        filename,
+        delim_whitespace=True,
+        skiprows=11,
+        names=['Cycle', 'Date', 'Time', 'Sea Level', 'Residual']
+    )
+
+
+    return
+
+
 def extract_single_year_remove_mean(year, data):
 
-    return 
+    return
 
 
 def extract_section_remove_mean(start, end, data):
@@ -34,7 +47,7 @@ def extract_section_remove_mean(start, end, data):
 
 def join_data(data1, data2):
 
-    return 
+    return
 
 def sea_level_rise(data):
 
@@ -46,7 +59,7 @@ def tidal_analysis(data, constituents, start_datetime):
 
 def get_longest_contiguous_data(data):
 
-    return 
+    return
 
 
 def main(args_list=None):
@@ -68,7 +81,7 @@ def main(args_list=None):
     verbose = args.verbose
 
     print("Add your code here to do things!")
-    
+
 
 if __name__ == '__main__':
     main()
