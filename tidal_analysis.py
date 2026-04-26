@@ -68,7 +68,7 @@ def read_tidal_data(filename):
 def extract_single_year_remove_mean(year, data):
 
 	#Extract the data for a single year.
-    single_year_data = data.loc[str(year)]
+    single_year_data = data.loc[str(year)].copy()
 
     sea_level_mean = single_year_data['Sea Level'].mean()
 
@@ -82,7 +82,7 @@ def extract_single_year_remove_mean(year, data):
 def extract_section_remove_mean(start, end, data):
 
 
-	return year_data
+	return
 
 
 def join_data(data1, data2):
