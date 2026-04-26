@@ -31,6 +31,8 @@ def read_tidal_data(filename):
         names=['Cycle', 'Date', 'Time', 'Sea Level', 'Residual']
     )
 
+	#Combine date and time columns into one column.
+    df['date_and_time'] = pd.to_datetime(df['Date'] + ' ' + df['Time'])
 
     return
 
