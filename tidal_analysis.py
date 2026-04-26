@@ -43,11 +43,10 @@ def read_tidal_data(filename):
 	#Replace bad data with NaN
     df[['Sea Level', 'Residual']] = df[['Sea Level','Residual']].replace(r".*[MNT]$", np.nan, regex=True)
 
-    return
+    #Set Sea Level to a float
+    df['Sea Level'] = df['Sea Level'].astype(float)
 
-
-
-
+    return df
 
 
 def extract_single_year_remove_mean(year, data):
