@@ -67,15 +67,20 @@ def extract_single_year_remove_mean(year, data):
     return single_year_data
 
 
+
 def extract_section_remove_mean(start, end, data):
 
 	#Convert start and end from integers to strings to use with datetime.
     start_string = str(start)
     end_string = str(end)
 
-    #Convert start and end from strings to datetime objects.
+    #Convert start and end from strings to datetime objects and set the end
+	#point to be the end of the day on the last day.
     start_datetime = datetime.datetime.strptime(start_string, '%Y%m%d')
-    end_datetime = datetime.datetime.strptime(end_string, '%Y%m%d')
+    end_datetime = datetime.datetime.combine(
+		           datetime.datetime.strptime(end_string, '%Y%m%d'),
+				   datetime.time.max
+    )
 
 	#Filtering to extract dates between the start and end
     extracted_section = data.loc[(data.index >= start_datetime) & (data.index <= end_datetime)].copy()
