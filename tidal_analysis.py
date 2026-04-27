@@ -40,9 +40,6 @@ def read_tidal_data(filename):
 	#Set the index to the datetime column
     df = df.set_index('date_and_time')
 
-	#Remove repeat columns.
-    df = df.drop(columns=['Date','Time'])
-
 	#Replace bad data with NaN
     df[['Sea Level', 'Residual']] = df[['Sea Level','Residual']].replace(r".*[MNT]$",
 								    np.nan,
@@ -97,11 +94,6 @@ def join_data(data1, data2):
     if not (isinstance(data1, pd.DataFrame) and isinstance(data2, pd.DataFrame)):
         raise TypeError('Both inputs must be DataFrames.')
 
-    #Error if sea level column is not in one of the DataFrames
-    required_cols = {'Sea Level'}
-
-    if not required_cols.issubset(data1.columns) or not required_cols.issubset(data2.columns):
-        raise KeyError("'Sea Level' column is required.")
 
     #Join data.
     all_data = [data1,data2]
