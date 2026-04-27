@@ -89,6 +89,10 @@ def extract_section_remove_mean(start, end, data):
     start_datetime = datetime.datetime.strptime(start_string, '%Y%m%d')
     end_datetime = datetime.datetime.strptime(end_string, '%Y%m%d')
 
+	#Filtering to extract dates between the start and end
+    extracted_section = data.loc[(data.index >= start_datetime) & (data.index <= end_datetime)].copy()
+
+
     return
 
 
