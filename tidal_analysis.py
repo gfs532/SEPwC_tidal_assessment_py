@@ -94,7 +94,7 @@ def extract_section_remove_mean(start, end, data):
 def join_data(data1, data2):
 
 	#Check data inputs are DataFrames.
-    if not isinstance(data1, pd.DataFrame):
+    if not isinstance((data1, pd.DataFrame)and isinstance(data2, pd.DataFrame)):
         raise TypeError('Both inputs must be DataFrames.')
 
     #Join data.
@@ -107,7 +107,10 @@ def join_data(data1, data2):
 		                   keep='first'
    )
 
-    return
+    #Sort dates chronologically.
+    joined_sorted = joined_no_duplicates.sort_index()
+
+    return joined_sorted
 
 def sea_level_rise(data):
 
