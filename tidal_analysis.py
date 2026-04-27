@@ -97,9 +97,15 @@ def join_data(data1, data2):
     if not isinstance(data1, pd.DataFrame):
         raise TypeError('Both inputs must be DataFrames.')
 
-    #Join data
+    #Join data.
     all_data = [data1,data2]
     joined = pd.concat(all_data)
+
+	#Remove duplicate dates.
+    joined_no_duplicates = joined.drop_duplicates(
+                           subset=joined.index,
+		                   keep='first'
+   )
 
     return
 
