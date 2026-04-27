@@ -111,6 +111,9 @@ def join_data(data1, data2):
 
 def sea_level_rise(data):
 
+    #Remove NaN values from data
+    data_no_nan = data.dropna(subset = ['Sea Level'])
+
     return
 
 def tidal_analysis(data, constituents, start_datetime):
