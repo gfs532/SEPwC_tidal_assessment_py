@@ -92,6 +92,10 @@ def extract_section_remove_mean(start, end, data):
 	#Filtering to extract dates between the start and end
     extracted_section = data.loc[(data.index >= start_datetime) & (data.index <= end_datetime)].copy()
 
+    sea_level_mean_section = extracted_section['Sea Level'].mean()
+
+	#Subtracting the mean sea level from the sea level column for the section.
+    extracted_section['Sea Level'] = extracted_section['Sea Level'] - sea_level_mean_section
 
     return
 
