@@ -94,16 +94,6 @@ def join_data(data1, data2):
     if not (isinstance(data1, pd.DataFrame) and isinstance(data2, pd.DataFrame)):
         raise TypeError('Both inputs must be DataFrames.')
 
-<<<<<<< HEAD
-
-    #Error if sea level column is not in one of the DataFrames
-    required_cols = {'Sea Level'}
-
-    if not required_cols.issubset(data1.columns) or not required_cols.issubset(data2.columns):
-        raise KeyError("'Sea Level' column is required.")
-=======
->>>>>>> 298cd2715103a79318fb4a5e6ba6b3c259fd23cd
-
     #Join data.
     all_data = [data1,data2]
     joined = pd.concat(all_data)
