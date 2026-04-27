@@ -40,9 +40,6 @@ def read_tidal_data(filename):
 	#Set the index to the datetime column
     df = df.set_index('date_and_time')
 
-	#Remove repeat columns.
-    df = df.drop(columns=['Date','Time'])
-
 	#Replace bad data with NaN
     df[['Sea Level', 'Residual']] = df[['Sea Level','Residual']].replace(r".*[MNT]$",
 								    np.nan,
