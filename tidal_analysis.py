@@ -111,10 +111,7 @@ def join_data(data1, data2):
     joined = pd.concat(all_data)
 
 	#Remove duplicate dates.
-    joined_no_duplicates = joined.drop_duplicates(
-                           subset=joined.index,
-		                   keep='first'
-   )
+    joined_no_duplicates = joined.drop_duplicates(keep='first')
 
     #Sort dates chronologically.
     joined_sorted = joined_no_duplicates.sort_index()
