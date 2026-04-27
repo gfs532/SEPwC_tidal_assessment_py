@@ -17,8 +17,6 @@ def read_tidal_data(filename):
     """
 
     #Create a path object.
-
-
     path = Path(filename)
 
     #Check the file exists.
@@ -29,7 +27,6 @@ def read_tidal_data(filename):
 	#Make sure whitespaces are not treated as columns.
 	#Skip the first 11 rows.
 	#Name the columns.
-
     df = pd.read_csv(
         filename,
         sep=r'\s+',
@@ -38,27 +35,21 @@ def read_tidal_data(filename):
     )
 
 	#Combine date and time columns into one column.
-
     df['date_and_time'] = pd.to_datetime(df['Date'] + ' ' + df['Time'])
 
 	#Set the index to the datetime column
-
     df = df.set_index('date_and_time')
 
 	#Remove repeat columns.
-
     df = df.drop(columns=['Date','Time'])
 
 	#Replace bad data with NaN
-
     df[['Sea Level', 'Residual']] = df[['Sea Level','Residual']].replace(r".*[MNT]$",
 								    np.nan,
 									regex=True
 	)
 
     #Set Sea Level to a float
-
-
     df['Sea Level'] = df['Sea Level'].astype(float)
 
 
@@ -101,6 +92,10 @@ def extract_section_remove_mean(start, end, data):
 
 
 def join_data(data1, data2):
+
+	#Check data inputs are DataFrames.
+    if not isinstance(data1, pd.DataFrame):
+        raise TypeError('Both inputs must be DataFrames.')
 
     return
 
