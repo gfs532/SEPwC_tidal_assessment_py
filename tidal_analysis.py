@@ -97,7 +97,7 @@ def extract_section_remove_mean(start, end, data):
 	#Subtracting the mean sea level from the sea level column for the section.
     extracted_section['Sea Level'] = extracted_section['Sea Level'] - sea_level_mean_section
 
-    return
+    return extracted_section
 
 
 def join_data(data1, data2):
