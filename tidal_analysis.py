@@ -94,7 +94,8 @@ def extract_section_remove_mean(start, end, data):
 def join_data(data1, data2):
 
 	#Check data inputs are DataFrames.
-    if not isinstance((data1, pd.DataFrame)and isinstance(data2, pd.DataFrame)):
+    # Correct way:
+    if not (isinstance(data1, pd.DataFrame) and isinstance(data2, pd.DataFrame)):
         raise TypeError('Both inputs must be DataFrames.')
 
     #Join data.
