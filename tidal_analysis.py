@@ -98,6 +98,14 @@ def join_data(data1, data2):
     if not (isinstance(data1, pd.DataFrame) and isinstance(data2, pd.DataFrame)):
         raise TypeError('Both inputs must be DataFrames.')
 
+    #Check that the sea level column is in the DataFrames
+    if 'Sea Level' not in data1.columns or 'Sea Level' not in data2.columns:
+        raise KeyError("Missing 'Sea Level' column.")
+
+   #Check that the Dataframes have DatetimeIndex.
+    if not (isinstance(data1.index, pd.DatetimeIndex) and isinstance(data2.index, pd.DatetimeIndex)):
+        raise TypeError("DataFrames must have a DatetimeIndex.")
+
     #Join data.
     all_data = [data1,data2]
     joined = pd.concat(all_data)
