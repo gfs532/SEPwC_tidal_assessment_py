@@ -94,29 +94,24 @@ def extract_section_remove_mean(start, end, data):
 def join_data(data1, data2):
 
 	#Check data inputs are DataFrames.
-    # Correct way:
     if not (isinstance(data1, pd.DataFrame) and isinstance(data2, pd.DataFrame)):
         raise TypeError('Both inputs must be DataFrames.')
 
-    #Check that the sea level column is in the DataFrames
-    if 'Sea Level' not in data1.columns or 'Sea Level' not in data2.columns:
-        raise KeyError("Missing 'Sea Level' column.")
+    #Error if sea level column is not in one of the DataFrames
+    required_cols = {'Sea Level'}
 
-   #Check that the Dataframes have DatetimeIndex.
-    if not (isinstance(data1.index, pd.DatetimeIndex) and isinstance(data2.index, pd.DatetimeIndex)):
-        raise TypeError("DataFrames must have a DatetimeIndex.")
+    if not required_cols.issubset(data1.columns) or not required_cols.issubset(data2.columns):
+        raise KeyError("'Sea Level' column is required.")
 
     #Join data.
     all_data = [data1,data2]
     joined = pd.concat(all_data)
 
 	#Remove duplicate dates.
-    joined_no_duplicates = joined.drop_duplicates(keep='first')
+    joined_no_duplicates = joined[~joined.index.duplicated(keep='first')]
 
     #Sort dates chronologically.
-    joined_sorted = joined_no_duplicates.sort_index()
-
-    return joined_sorted
+    return  joined_no_duplicates.sort_index()
 
 def sea_level_rise(data):
 
