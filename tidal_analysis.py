@@ -17,8 +17,6 @@ def read_tidal_data(filename):
     """
 
     #Create a path object.
-
-
     path = Path(filename)
 
     #Check the file exists.
@@ -29,7 +27,6 @@ def read_tidal_data(filename):
 	#Make sure whitespaces are not treated as columns.
 	#Skip the first 11 rows.
 	#Name the columns.
-
     df = pd.read_csv(
         filename,
         sep=r'\s+',
@@ -38,27 +35,18 @@ def read_tidal_data(filename):
     )
 
 	#Combine date and time columns into one column.
-
     df['date_and_time'] = pd.to_datetime(df['Date'] + ' ' + df['Time'])
 
 	#Set the index to the datetime column
-
     df = df.set_index('date_and_time')
 
-	#Remove repeat columns.
-
-    df = df.drop(columns=['Date','Time'])
-
 	#Replace bad data with NaN
-
     df[['Sea Level', 'Residual']] = df[['Sea Level','Residual']].replace(r".*[MNT]$",
 								    np.nan,
 									regex=True
 	)
 
     #Set Sea Level to a float
-
-
     df['Sea Level'] = df['Sea Level'].astype(float)
 
 
@@ -79,15 +67,20 @@ def extract_single_year_remove_mean(year, data):
     return single_year_data
 
 
+
 def extract_section_remove_mean(start, end, data):
 
 	#Convert start and end from integers to strings to use with datetime.
     start_string = str(start)
     end_string = str(end)
 
-    #Convert start and end from strings to datetime objects.
+    #Convert start and end from strings to datetime objects and set the end
+	#point to be the end of the day on the last day.
     start_datetime = datetime.datetime.strptime(start_string, '%Y%m%d')
-    end_datetime = datetime.datetime.strptime(end_string, '%Y%m%d')
+    end_datetime = datetime.datetime.combine(
+		           datetime.datetime.strptime(end_string, '%Y%m%d'),
+				   datetime.time.max
+    )
 
 	#Filtering to extract dates between the start and end
     extracted_section = data.loc[(data.index >= start_datetime) & (data.index <= end_datetime)].copy()
@@ -102,7 +95,19 @@ def extract_section_remove_mean(start, end, data):
 
 def join_data(data1, data2):
 
-    return
+	#Check data inputs are DataFrames.
+    if not (isinstance(data1, pd.DataFrame) and isinstance(data2, pd.DataFrame)):
+        raise TypeError('Both inputs must be DataFrames.')
+
+    #Join data.
+    all_data = [data1,data2]
+    joined = pd.concat(all_data)
+
+	#Remove duplicate dates.
+    joined_no_duplicates = joined[~joined.index.duplicated(keep='first')]
+
+    #Sort dates chronologically.
+    return  joined_no_duplicates.sort_index()
 
 def sea_level_rise(data):
 
