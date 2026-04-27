@@ -97,6 +97,10 @@ def join_data(data1, data2):
     if not isinstance(data1, pd.DataFrame):
         raise TypeError('Both inputs must be DataFrames.')
 
+    #Join data
+    all_data = [data1,data2]
+    joined = pd.concat(all_data)
+
     return
 
 def sea_level_rise(data):
