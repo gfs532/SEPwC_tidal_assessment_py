@@ -117,8 +117,13 @@ def sea_level_rise(data):
 	#Convert DatetimeIndex to float values.
     float_data = mdates.date2num(data_no_nan.index)
 
+	#Dp linear regression
+    slope, intercept, r_value, p_value, std_err = stats.linregress(
+		                                          float_data,
+												  data_no_nan['Sea Level']
+	)
 
-    return
+    return slope, p_value
 
 def tidal_analysis(data, constituents, start_datetime):
 
