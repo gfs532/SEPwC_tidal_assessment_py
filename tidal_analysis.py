@@ -120,9 +120,9 @@ def sea_level_rise(data):
 	#Dp linear regression
     slope, intercept, r_value, p_value, std_err = stats.linregress(
 		                                          float_data,
-												  data_no_nan['Sea Level']
+												  data_no_nan['Sea Level'].values
 	)
-
+    
     return slope, p_value
 
 def tidal_analysis(data, constituents, start_datetime):
