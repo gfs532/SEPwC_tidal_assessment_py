@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun May  3 14:31:04 2026
+
+@author: matilda
+"""
+
 # import the modules we need
 import pandas as pd
 import datetime
@@ -48,6 +55,8 @@ def read_tidal_data(filename):
 
     #Set Sea Level to a float
     df['Sea Level'] = df['Sea Level'].astype(float)
+
+    df.loc[df['Sea Level'] < -90, 'Sea Level'] = np.nan
 
 
     return df
@@ -101,19 +110,56 @@ def join_data(data1, data2):
 
     #Join data.
     all_data = [data1,data2]
-    joined = pd.concat(all_data)
+    joined = pd.concat(all_data).sort_index()
 
 	#Remove duplicate dates.
     joined_no_duplicates = joined[~joined.index.duplicated(keep='first')]
 
     #Sort dates chronologically.
-    return  joined_no_duplicates.sort_index()
+    return  joined_no_duplicates
 
 def sea_level_rise(data):
 
-    return
+    #Remove NaN values from data.
+    data_no_nan = data.dropna(subset = ['Sea Level'])
+
+	#Convert DatetimeIndex to float values.
+    float_data = mdates.date2num(data_no_nan.index)
+    normalised = (float_data -float_data[0])
+
+	#Do linear regression
+    slope, intercept, r_value, p_value, std_err = stats.linregress(
+		                                          normalised,
+												  data_no_nan['Sea Level'].values
+	)
+
+
+    return slope, p_value
+
 
 def tidal_analysis(data, constituents, start_datetime):
+
+    #Set up constituents and initial time.
+    tide = uptide.Tides(constituents)
+    tide.set_initial_time(start_datetime)
+
+	#Check timezone of initial time.
+    timezone = start_datetime.tzinfo
+
+    #If the data has no timezone attached, give it the same as start_datetime
+	#If it does have a timezone attached, convert it to the same as start_datetime
+    if data.index.tz is None:
+        timezone_index = data.index.tz_localize(timezone)
+    else:
+        timezone_index = data.index.tz_convert(timezone)
+
+    #Find amount of time passed since initial time.
+    time_diff = timezone_index - start_datetime
+    seconds_since_start = time_diff.total_seconds().values
+
+    amp, pha = uptide.harmonic_analysis(tide, data['Sea Level'].values, seconds_since_start)
+
+    return amp, pha
 
     return
 
