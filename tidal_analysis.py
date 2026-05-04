@@ -222,6 +222,9 @@ def main(args_list=None):
 	#Get cleaned version of longest streak of contiguous data
     best_data = get_longest_contiguous_data(cleaned_data)
 
+    #Find start datetime and set timezone to utc
+    best_start = best_data.index[0].tz_localize('UTC')
+
 
     print("Add your code here to do things!")
 
