@@ -217,7 +217,7 @@ def main(args_list=None):
 
 	#Join all data tables
     full_data = pd.concat(tidal_data_list)
-
+    cleaned_data = join_data(full_data)
 
     print("Add your code here to do things!")
 
