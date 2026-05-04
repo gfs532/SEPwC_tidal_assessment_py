@@ -161,9 +161,11 @@ def tidal_analysis(data, constituents, start_datetime):
 
     return amp, pha
 
-    return
 
 def get_longest_contiguous_data(data):
+
+	#Finding the locations of NaN
+	breaks = data['Sea Level'].isna()
 
     return
 
