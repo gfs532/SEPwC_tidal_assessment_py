@@ -223,6 +223,9 @@ def main(args_list=None):
 
     tidal_results = tidal_analysis(best_data,['M2','S2'], start_datetime)
 
+    long_sea_rise = sea_level_rise(tidal_data_list)
+
+
     print("Add your code here to do things!")
 
 
