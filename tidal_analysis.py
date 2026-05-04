@@ -219,6 +219,10 @@ def main(args_list=None):
     full_data = pd.concat(tidal_data_list)
     cleaned_data = join_data(full_data)
 
+	#Get cleaned version of longest streak of contiguous data
+    best_data = get_longest_contiguous_data(cleaned_data)
+
+
     print("Add your code here to do things!")
 
 
