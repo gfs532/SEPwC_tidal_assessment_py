@@ -166,23 +166,23 @@ def tidal_analysis(data, constituents, start_datetime):
 def get_longest_contiguous_data(data):
 
 	#Finding the locations of NaN and create streaks between breaks.
-	streaks = data['Sea Level'].isna().cumsum()
+    streaks = data['Sea Level'].isna().cumsum()
 
 	#Remove rows with NaN values from data and from the corresponding rows in
 	#streaks
-	valid_data = data.dropna(subset=['Sea Level'])
-	valid_streaks = streaks[data['Sea Level'].notna()]
+    valid_data = data.dropna(subset=['Sea Level'])
+    valid_streaks = streaks[data['Sea Level'].notna()]
 
 	#Group rows by streak ID and find length of each.
-	streak_length = valid_data.groupby(valid_streaks).size()
+    streak_length = valid_data.groupby(valid_streaks).size()
 
 	#Find ID fof longest streak
-	longest_streak_id = streak_length.idxmax()
+    longest_streak_id = streak_length.idxmax()
 
 	#Isolate data with with the longest streak ID.
-	longest_data = valid_data[valid_streaks == longest_streak_id]
+    longest_data = valid_data[valid_streaks == longest_streak_id]
 
-	return longest_data
+    return longest_data
 
 
 def main(args_list=None):
@@ -211,9 +211,9 @@ def main(args_list=None):
 
     #Go through files and implement read_tidal_data function to each year
     for file_path in files[1:]:
-	    current_year = read_tidal_data(file_path)
+        current_year = read_tidal_data(file_path)
 	    #Adding year tables to main table
-	    full_data = join_data(full_data, current_year)
+        full_data = join_data(full_data, current_year)
 
 	#Get cleaned version of longest streak of contiguous data
     best_data = get_longest_contiguous_data(full_data)
@@ -241,10 +241,10 @@ def main(args_list=None):
         S2 Phase: {s2_pha}
 """
     if verbose:
-	    print(summary)
+        print(summary)
     else:
-	    with open('results.txt','w') as f:
-		    f.write(summary)
+        with open('results.txt','w') as f:
+            f.write(summary)
 
 if __name__ == '__main__':
     main()
