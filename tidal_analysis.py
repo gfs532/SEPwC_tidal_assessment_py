@@ -206,25 +206,22 @@ def main(args_list=None):
     #Find pathway to wanted files.
     files = glob.glob(os.path.join(dirname, '*.txt'))
 
-	#Set up an empty list for the files.
-    tidal_data_list = []
+	#Read the first file
+    tidal_data_list = read_tidal_data(files[0])
 
-    #Go through files and implement read_tidal_data function to each
-    for file in files:
-	    table = read_tidal_data(file)
-	    #Adding tables to main table
-	    tidal_data_list.append(table)
-
-	#Join all data tables
-    full_data = pd.concat(tidal_data_list)
-    cleaned_data = join_data(full_data)
+    #Go through files and implement read_tidal_data function to each year
+    for file_path in files[1]:
+	    current_year = read_tidal_data(file_path)
+	    #Adding year tables to main table
+	    tidal_data_list = join_data(tidal_data_list, current_year)
 
 	#Get cleaned version of longest streak of contiguous data
-    best_data = get_longest_contiguous_data(cleaned_data)
+    best_data = get_longest_contiguous_data(tidal_data_list)
 
     #Find start datetime and set timezone to utc
-    best_start = best_data.index[0].tz_localize('UTC')
+    start_datetime = best_data.index[0].tz_localize('UTC')
 
+    tidal_results = tidal_analysis(best_data,['M2','S2'], start_datetime)
 
     print("Add your code here to do things!")
 
