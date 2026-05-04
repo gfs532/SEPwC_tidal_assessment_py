@@ -215,6 +215,10 @@ def main(args_list=None):
 	    #Adding tables to main table
 	    tidal_data_list.append(table)
 
+	#Join all data tables
+    full_data = pd.concat(tidal_data_list)
+
+
     print("Add your code here to do things!")
 
 
