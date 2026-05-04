@@ -207,27 +207,44 @@ def main(args_list=None):
     files = glob.glob(os.path.join(dirname, '*.txt'))
 
 	#Read the first file
-    tidal_data_list = read_tidal_data(files[0])
+    full_data = read_tidal_data(files[0])
 
     #Go through files and implement read_tidal_data function to each year
-    for file_path in files[1]:
+    for file_path in files[1:]:
 	    current_year = read_tidal_data(file_path)
 	    #Adding year tables to main table
-	    tidal_data_list = join_data(tidal_data_list, current_year)
+	    full_data = join_data(full_data, current_year)
 
 	#Get cleaned version of longest streak of contiguous data
-    best_data = get_longest_contiguous_data(tidal_data_list)
+    best_data = get_longest_contiguous_data(full_data)
 
     #Find start datetime and set timezone to utc
     start_datetime = best_data.index[0].tz_localize('UTC')
 
-    tidal_results = tidal_analysis(best_data,['M2','S2'], start_datetime)
+    #Split the results up into amplitude and phase.
+    amp, pha = tidal_analysis(best_data,['M2','S2'], start_datetime)
 
-    long_sea_rise = sea_level_rise(tidal_data_list)
+    #Use all years to get a more accurate result
+    long_sea_rise = sea_level_rise(full_data)*365
 
+    m2_amp = amp[0]
+    s2_amp = amp[1]
+    m2_pha = pha[0]
+    s2_pha = pha[1]
 
-    print("Add your code here to do things!")
-
+    summary = f"""
+	---Tidal Analysis Results---
+	Sea Level Rise: {long_sea_rise} m/year
+	M2 Amplitude: {m2_amp}
+        M2 Phase: {m2_pha}
+        S2 Amplitude: {s2_amp}
+        S2 Phase: {s2_pha}
+"""
+    if verbose:
+	    print(summary)
+    else:
+	    with open('results.txt','w') as f:
+		    f.write(summary)
 
 if __name__ == '__main__':
     main()
