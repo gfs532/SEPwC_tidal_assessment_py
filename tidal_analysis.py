@@ -206,6 +206,15 @@ def main(args_list=None):
     #Find pathway to wanted files.
     files = glob.glob(os.path.join(dirname, '*.txt'))
 
+	#Set up an empty list for the files.
+    tidal_data_list = []
+
+    #Go through files and implement read_tidal_data function to each
+    for file in files:
+	    table = read_tidal_data(file)
+	    #Adding tables to main table
+	    tidal_data_list.append(table)
+
     print("Add your code here to do things!")
 
 
