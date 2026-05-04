@@ -172,6 +172,14 @@ def get_longest_contiguous_data(data):
 	valid_data = data.dropna(subset=['Sea Level'])
 	valid_streaks = streaks[data['Sea Level'].notna]
 
+	#Group rows by streak ID and find length of each.
+	streak_length = valid_data.groupby(valid_streaks).size()
+
+	#Find ID fof longest streak
+	longest_streak_id = streak_length.idmax()
+
+	#Isolate data with with the longest streak ID.
+	longest_data = valid_data[valid_streaks == longest_streak_id]
 
 	return longest_data
 
