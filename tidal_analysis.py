@@ -164,8 +164,8 @@ def tidal_analysis(data, constituents, start_datetime):
 
 def get_longest_contiguous_data(data):
 
-	#Finding the locations of NaN
-	breaks = data['Sea Level'].isna()
+	#Finding the locations of NaN and create streaks between breaks.
+	streaks = data['Sea Level'].isna().cumsum()
 
     return
 
