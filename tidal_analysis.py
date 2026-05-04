@@ -170,7 +170,7 @@ def get_longest_contiguous_data(data):
 	#Remove rows with NaN values from data and from the corresponding rows in
 	#streaks
 	valid_data = data.dropna(subset=['Sea Level'])
-	valid_streaks = streaks[data['Sea Level'].notna]
+	valid_streaks = streaks[data['Sea Level'].notna()]
 
 	#Group rows by streak ID and find length of each.
 	streak_length = valid_data.groupby(valid_streaks).size()
