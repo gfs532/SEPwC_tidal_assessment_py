@@ -17,6 +17,7 @@ from scipy import stats
 import matplotlib.dates as mdates
 import argparse
 from pathlib import Path
+import glob
 
 def read_tidal_data(filename):
     """Input - file from user
@@ -201,6 +202,9 @@ def main(args_list=None):
     args = parser.parse_args(args_list)
     dirname = args.directory
     verbose = args.verbose
+
+    #Find pathway to wanted files.
+    files = glob.glob(os.path.join(dirname, '*.txt'))
 
     print("Add your code here to do things!")
 
