@@ -176,7 +176,7 @@ def get_longest_contiguous_data(data):
 	streak_length = valid_data.groupby(valid_streaks).size()
 
 	#Find ID fof longest streak
-	longest_streak_id = streak_length.idmax()
+	longest_streak_id = streak_length.idxmax()
 
 	#Isolate data with with the longest streak ID.
 	longest_data = valid_data[valid_streaks == longest_streak_id]
