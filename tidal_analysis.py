@@ -167,7 +167,13 @@ def get_longest_contiguous_data(data):
 	#Finding the locations of NaN and create streaks between breaks.
 	streaks = data['Sea Level'].isna().cumsum()
 
-    return
+	#Remove rows with NaN values from data and from the corresponding rows in
+	#streaks
+	valid_data = data.dropna(subset=['Sea Level'])
+	valid_streaks = streaks[data['Sea Level'].notna]
+
+
+	return longest_data
 
 
 def main(args_list=None):
